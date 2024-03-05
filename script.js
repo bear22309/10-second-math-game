@@ -4,6 +4,7 @@ $(document).ready(function () {
   var timeLeft = 10;
   var score = 0;
   var highScore = 0;
+  var numRange = 10;
 
   var updateTimeLeft = function (amount) {
     timeLeft += amount;
@@ -46,19 +47,20 @@ $(document).ready(function () {
     var operation = Math.random() < 0.5 ? "+" : "*";
 
     if (operation === "+") {
-      num1 = randomNumberGenerator($("#number-range").val());
-      num2 = randomNumberGenerator($("#number-range").val());
+      num1 = randomNumberGenerator(numRange); 
+      num2 = randomNumberGenerator(numRange); 
       question.answer = num1 + num2;
       question.equation = String(num1) + " + " + String(num2);
     } else {
-      num1 = randomNumberGenerator();
-      num2 = randomNumberGenerator();
+      num1 = randomNumberGenerator(numRange); 
+      num2 = randomNumberGenerator(numRange); 
       question.answer = num1 * num2;
       question.equation = String(num1) + " * " + String(num2);
     }
 
     return question;
   };
+
 
   var renderNewQuestion = function () {
     currentQuestion = questionGenerator();
@@ -87,7 +89,14 @@ $(document).ready(function () {
             renderNewQuestion();
         }
     }
+  
+  $("#number-range").on("change", function() {
+      numRange = $(this).val() || 10;
+      updateRange(); 
+  });
   $("#update-range-btn").on("click", function() {
       updateRange();
   });
+  return numRange
+
 });
